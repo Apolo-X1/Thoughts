@@ -1,0 +1,52 @@
+---
+import { SEO } from "astro-seo";
+import { SITE_URL } from "@/data/config";
+
+type Props = {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+  og?: {
+    title: string;
+    type: string;
+    description: string;
+    image: string;
+    alt: string;
+  };
+};
+
+const { title, description, noindex, og } = Astro.props;
+
+const DEFAULT_TITLE_PAGE = "Thoughts";
+const DEFAULT_DESCRIPTION_PAGE =
+  "meditations, phrases, thoughts and things of life.";
+const DEFAULT_URL_SITE = SITE_URL;
+
+const openGraph = {
+  title: og?.title || DEFAULT_TITLE_PAGE,
+  type: og?.type || "website",
+  image: og?.image || "/opengraph-image.jpg",
+  alt: og?.alt || "astro starter image",
+  url: DEFAULT_URL_SITE,
+  description: og?.description || DEFAULT_DESCRIPTION_PAGE,
+};
+---
+
+<head>
+  <SEO
+    charset="UTF-8"
+    title={title || DEFAULT_TITLE_PAGE}
+    description={description || DEFAULT_DESCRIPTION_PAGE}
+    noindex={noindex || false}
+    openGraph={{
+      basic: {
+        title: openGraph.title,
+        type: openGraph.type,
+        image: openGraph.image,
+      },
+      image: {
+        alt: openGraph.alt,
+      },
+    }}
+  />
+</head>
